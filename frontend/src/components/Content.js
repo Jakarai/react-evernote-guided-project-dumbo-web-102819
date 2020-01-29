@@ -11,17 +11,38 @@ import Instructions from './Instructions';
           refactor to get this Content component to work.
 */
 class Content extends Component {
+
+  state = {
+    editNote: this.props.editNote,
+    displayNote: this.props.displayNote
+  }
+
+  renderEdit = () => {
+    this.setState({
+      editNote: !this.state.editNote
+    })
+  }
+
+  cancelEdit = () => {
+    this.setState({
+      editNote: !this.state.editNote
+    })
+  }
+  
+  
+
   renderContent = () => {
-    if (false) {
-      return <NoteEditor />;
-    } else if (false) {
-      return <NoteViewer />;
+    if (this.state.editNote) {
+      return <NoteEditor cancelEdit={this.cancelEdit} handleSubmit={this.props.handleSubmit} displayNote={this.props.displayNote}/>;
+    } else if (this.props.displayNote) {
+      return <NoteViewer displayNote={this.props.displayNote} renderEdit={this.renderEdit} />;
     } else {
       return <Instructions />;
     }
   }
 
   render() {
+
     return (
       <div className='master-detail-element detail'>
         {this.renderContent()}
